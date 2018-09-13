@@ -3447,6 +3447,14 @@ angular.module('_pages/docs/config/metadata.ngt', []).run(['$templateCache', fun
     '          pattern: heroic-a-%s\n' +
     '</codeblock>\n' +
     '\n' +
+    '<p>\n' +
+    '  <b>WARNINGS</b> There are ElasticSearch settings and mappings that must be configured before indexing operations are processed. These are required to make the reads efficient. At Spotify\n' +
+    '  these settings are added when setting up the ElasticSearch cluster with Puppet.\n' +
+    '\n' +
+    '<a href="https://github.com/spotify/heroic/blob/7ff07a654048ce760e867835e11f230cd7c5a4ee/metadata/elasticsearch/src/main/resources/com.spotify.heroic.metadata.elasticsearch/kv/metadata.json">settings/mappings are here</a>\n' +
+    '\n' +
+    '</p>\n' +
+    '\n' +
     '<table class="table">\n' +
     '  <tr>\n' +
     '    <td><code>backends</code></td>\n' +
@@ -3525,6 +3533,16 @@ angular.module('_pages/docs/config/metadata.ngt', []).run(['$templateCache', fun
     '    </td>\n' +
     '  </tr>\n' +
     '</table>\n' +
+    '\n' +
+    '<p>\n' +
+    '  Example of what the stored metadata look like.\n' +
+    '</p>\n' +
+    '<codeblock language="json">\n' +
+    '\n' +
+    '{\'_index\': \'heroic-1535587200000\', \'_type\': \'metadata\', \'_id\': \'447939eaf69475f685518dc2c179ddaf\', \'_version\': 1, \'found\': True, \'_source\': {\'key\': \'apollo\', \'tags\': [\'component\\x00memcache-client\', \'operation\\x00get\', \'what\\x00memcache-results\'], \'tag_keys\': [\'component\', \'operation\', \'what\']}}\n' +
+    '\n' +
+    '\n' +
+    '</codeblock>\n' +
     '');
 }]);
 
@@ -3790,6 +3808,16 @@ angular.module('_pages/docs/config/metrics.ngt', []).run(['$templateCache', func
     '    </td>\n' +
     '  </tr>\n' +
     '</table>\n' +
+    '\n' +
+    '<p>\n' +
+    'A note on sending metrics with the same timestamp and/or duplicate metrics.\n' +
+    '\n' +
+    'These metric values will not be duplicated within the row, since Heroic is mutating rows and not appending to the column family. In bigtable each \n' +
+    'timestamp + value is a column within the row.\n' +
+    '\n' +
+    '<img style="width: 100%;" src="images/row-mutation.png"></img>\n' +
+    '\n' +
+    '</p>\n' +
     '');
 }]);
 
@@ -3973,6 +4001,7 @@ angular.module('_pages/docs/config/suggest.ngt', []).run(['$templateCache', func
     '<p>\n' +
     '  The ability to perform suggestions is an important usability feature.\n' +
     '  It makes the difference for your system to be a complete black box, to giving your developers the ability to find and make use of time series on their own.\n' +
+    '  Suggests are fairly expensive in terms of data storage and indexing operations. As each tag that is part of a metric is indexed. \n' +
     '</p>\n' +
     '\n' +
     '<p>\n' +
@@ -3993,6 +4022,15 @@ angular.module('_pages/docs/config/suggest.ngt', []).run(['$templateCache', func
     '          pattern: heroic-a-%s\n' +
     '</codeblock>\n' +
     '\n' +
+    '\n' +
+    '<p>\n' +
+    '  <b>WARNINGS</b> There are ElasticSearch settings and mappings that must be configured before indexing operations are processed. These are required to make the reads efficient. At Spotify\n' +
+    '  these settings are added when setting up the ElasticSearch cluster with Puppet.\n' +
+    '\n' +
+    '<a href="https://github.com/spotify/heroic/tree/7ff07a654048ce760e867835e11f230cd7c5a4ee/suggest/elasticsearch/src/main/resources/com.spotify.heroic.suggest.elasticsearch/kv">\n' +
+    '  settings/mappings are here</a>\n' +
+    '</p>\n' +
+    '\n' +
     '<table class="table">\n' +
     '  <tr>\n' +
     '    <td><code>backends</code></td>\n' +
@@ -4003,7 +4041,7 @@ angular.module('_pages/docs/config/suggest.ngt', []).run(['$templateCache', func
     '    <td>\n' +
     '      A list of backend group names that are part of the default group.\n' +
     '      The default group is the group of backends that are used for operations unless a specified group is used.\n' +
-    '      The default behaviour is to include <em>all configured backends</em> in the default group.\n' +
+    '      The default behavior is to include <em>all configured backends</em> in the default group.\n' +
     '    </td>\n' +
     '  </tr>\n' +
     '</table>\n' +
@@ -4071,6 +4109,18 @@ angular.module('_pages/docs/config/suggest.ngt', []).run(['$templateCache', func
     '    </td>\n' +
     '  </tr>\n' +
     '</table>\n' +
+    '\n' +
+    '\n' +
+    '<p>\n' +
+    '  Example of what the stored suggestions look like.\n' +
+    '</p>\n' +
+    '<codeblock language="json">\n' +
+    '\n' +
+    '{\'_index\': \'heroic-1536192000000\', \'_type\': \'series\', \'_id\': \'447939eaf69475f685518dc2c179ddaf\', \'_version\': 1, \'found\': True, \'_source\': {\'key\': \'apollo\', \'tags\': [\'component\\x00memcache-client\', \'operation\\x00get\', \'what\\x00memcache-results\'], \'tag_keys\': [component\', \'operation\', \'what\'], \'series_id\': \'447939eaf69475f685518dc2c179ddaf\'}}\n' +
+    '\n' +
+    '{\'_index\': \'heroic-1536192000000\', \'_type\': \'tag\', \'_id\': \'447939eaf69475f685518dc2c179ddaf:687d7854\', \'_version\': 1, \'found\': True, \'_source\': {\'key\': \'apollo\', \'tags\': [\'component\\x00memcache-client\', \'what\\x00memcache-results\', \'operation\\x00get\'], \'tag_keys\': [\'component\', \'what\', \'operation\'], \'series_id\': \'447939eaf69475f685518dc2c179ddaf\', \'skey\': \'component\', \'sval\': \'memcache-client\', \'kv\': \'component\\x00memcache-client\'}}\n' +
+    '\n' +
+    '</codeblock>\n' +
     '');
 }]);
 
