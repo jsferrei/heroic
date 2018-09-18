@@ -77,6 +77,7 @@ import com.spotify.heroic.statistics.HeroicReporter;
 import com.spotify.heroic.statistics.StatisticsComponent;
 import com.spotify.heroic.suggest.CoreSuggestComponent;
 import com.spotify.heroic.suggest.DaggerCoreSuggestComponent;
+import com.spotify.opencensus.exporter.trace.instana.InstanaTraceExporter;
 import eu.toolchain.async.AsyncFramework;
 import eu.toolchain.async.AsyncFuture;
 import eu.toolchain.async.ResolvableFuture;
@@ -298,6 +299,14 @@ public class HeroicCore implements HeroicConfiguration {
             final String service = configMap.getOrDefault("service", "heroic");
             final String url = configMap.get("url");
             ZipkinTraceExporter.createAndRegister(url, service);
+        }
+
+        final Object instanaConfig = config.get("instana");
+        if (instanaConfig != null) {
+            final Map<String, String> configMap = (Map) instanaConfig;
+            final String endpoint = configMap.getOrDefault(
+                "endpoint", "http://localhost:42699/com.instana.plugin.generic.trace");
+            InstanaTraceExporter.createAndRegister(endpoint);
         }
 
         final Integer zpagesPort = (Integer) config.get("zpagesPort");

@@ -528,6 +528,11 @@
         <artifactId>opencensus-contrib-grpc-util</artifactId>
         <version>${opencensus.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.spotify</groupId>
+        <artifactId>opencensus-exporter-trace-instana</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
 
 
       <!-- useful collections and utilities -->

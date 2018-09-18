@@ -118,6 +118,10 @@
       <groupId>io.opencensus</groupId>
       <artifactId>opencensus-contrib-grpc-util</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.spotify</groupId>
+      <artifactId>opencensus-exporter-trace-instana</artifactId>
+    </dependency>
 
     <!-- testing -->
     <dependency>
